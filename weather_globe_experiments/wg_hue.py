@@ -27,6 +27,11 @@ light_sensor = analogio.AnalogIn(board.LIGHT)
 thermistor = adafruit_thermistor.Thermistor(
     board.TEMPERATURE, 10000, 10000, 25, 3950)
 
+# NeoPixel(pin, number_of_lights, bytes_per_pixel=3,
+#          brightness=1.0, auto_write=True, pixel_order=None)
+pixels = neopixel.NeoPixel(board.NEOPIXEL, 10, brightness=1,
+                           auto_write=False, pixel_order='RGB')
+
 while True:
     light = light_sensor.value
     temp_f = thermistor.temperature * 9 / 5 + 32
@@ -57,11 +62,7 @@ while True:
     # and brightness range is 0 to 1.
     brightness = light / 62000
 
-    # NeoPixel(pin, number_of_lights, bytes_per_pixel=3,
-    #          brightness=1.0, auto_write=True, pixel_order=None)
-    pixels = neopixel.NeoPixel(board.NEOPIXEL, 10, brightness=brightness,
-                               auto_write=False, pixel_order='RGB')
-
+    pixels.brightness = brigtness
     pixels.fill(rgb)
     pixels.show()
     time.sleep(0.25)
